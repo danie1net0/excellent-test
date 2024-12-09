@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+# Verifica se é merge
+git merge HEAD &> /dev/null
+
+IS_MERGE_PROCESS=$?
+
+if [ $IS_MERGE_PROCESS -ne 0 ];
+  then
+    exit $?
+  fi
+
+# Recupera arquivos em staging
+STAGED_FILES=$(git diff --cached --name-only)
+
+# Aborta a execução caso a área de staging esteja limpa
+if [[ "$STAGED_FILES" = "" ]];
+  then
+    exit 0
+  fi
+
+# Executa os scripts
+docker exec excellent-api npm run lint
+docker exec excellent-api npm run format
+
+git add $STAGED_FILES

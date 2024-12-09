@@ -1,0 +1,11 @@
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+  relationMode = "foreignKeys"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
+  binaryTargets = ["native", "linux-musl-arm64-openssl-1.1.x", "darwin-arm64"]
+}

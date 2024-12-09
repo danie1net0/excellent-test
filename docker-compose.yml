@@ -1,0 +1,34 @@
+services:
+  api:
+    build: .docker
+    entrypoint: .docker/entrypoint.sh
+    container_name: excellent-api
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app
+    networks:
+      - excellent-network
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: excellent-db
+    environment:
+      POSTGRES_USER: excellent
+      POSTGRES_PASSWORD: excellent
+      POSTGRES_DB: excellent
+    ports:
+        - "5474:5432"
+    volumes:
+      - excellent-db:/var/lib/postgresql/data
+    networks:
+        - excellent-network
+
+volumes:
+    excellent-db:
+
+networks:
+  excellent-network:
+    driver: bridge

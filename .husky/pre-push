@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+docker exec excellent-api npm run lint
+docker exec excellent-api npm run test
+docker exec excellent-api npm run test:e2e
