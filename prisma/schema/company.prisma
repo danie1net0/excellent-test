@@ -1,0 +1,10 @@
+model Company {
+  id Int @default(autoincrement()) @id
+  email String  @unique @db.VarChar(100)
+  corporateName String @db.VarChar(100) @map("corporate_name")
+  cnpj  String  @unique @db.VarChar(14)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("companies")
+}

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { CompanyRepositoryContract } from './company-repository.contract';
 import { Company } from '../entities/company.entity';
@@ -14,16 +14,10 @@ export class PrismaCompanyRepository implements CompanyRepositoryContract {
     })) as unknown as Company[];
   }
 
-  public async findById(id: number): Promise<Company> {
-    const company: Company | null = (await this.prisma.company.findUnique({
+  public async findById(id: number): Promise<Company | null> {
+    return (await this.prisma.company.findUnique({
       where: { id },
     })) as unknown as Company;
-
-    if (!company) {
-      throw new NotFoundException('Company not found.');
-    }
-
-    return company;
   }
 
   public async findByCnpj(cnpj: string): Promise<Company | null> {
